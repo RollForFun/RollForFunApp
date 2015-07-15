@@ -1,6 +1,22 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope) {
+  var onShake = function () {
+    $(".list").show();
+    shake.stopWatch();
+  };
+
+  var onError = function () {
+    // Fired when there is an accelerometer error (optional)
+  };
+
+  // Start watching for shake gestures and call "onShake"
+  // with a shake sensitivity of 40 (optional, default 30)
+  shake.startWatch(onShake, 40 /*, onError */);
+
+  // Stop watching for shake gestures
+  
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

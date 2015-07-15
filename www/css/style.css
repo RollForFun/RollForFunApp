@@ -1,1 +1,18 @@
 /* Empty. Add your own CSS if you like */
+.shakeImg {
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.shakeImg img {
+	width: 200px;
+	max-width: 50%;
+	max-height: 60%;
+}
+
+.list {
+	margin: auto;
+	max-width: 80%;
+	display: none;
+}
