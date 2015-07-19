@@ -2,20 +2,28 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {
   var onShake = function () {
+    alert("Oh yeah");
     $(".list").show();
-    shake.stopWatch();
+    window.cordova.plugins.shake.stopWatch();
   };
 
   var onError = function () {
-    // Fired when there is an accelerometer error (optional)
+    alert("WTF");
   };
-
-  // Start watching for shake gestures and call "onShake"
-  // with a shake sensitivity of 40 (optional, default 30)
-  shake.startWatch(onShake, 40 /*, onError */);
-
-  // Stop watching for shake gestures
+  if (cordova) {
+    //alert("yes");
+  }
+  else{
+    alert("WTF,No cordova?");
+  }
   
+  try {
+    window.cordova.plugins.shake.startWatch(onShake, 40, onError);
+    alert("shake start!");
+  }
+  catch(err) {
+    document.getElementById("demo").innerHTML = err.message;
+  }
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {
