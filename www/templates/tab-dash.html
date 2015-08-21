@@ -1,23 +1,21 @@
 <ion-view view-title="摇一摇">
   <ion-content class="padding">
-  <div class ="shakeImg">
+  <div ng-show="shake_ready ||(!loading && restaurants.length == 0)" ng-click="desktop()" class ="shakeImg">
     <img src ="img/shake.jpg">
   </div>
-  <p id="demo">Status here</p>
+  <div ng-show="loading" class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
+  <ion-list>
+    <ion-item ng-repeat="item in restaurants"
+              class="item-thumbnail-left" ng-click="open_url(item.url)">
 
-  <div class="list">
-    <a class="item item-avatar" href="#">
-      <img src="venkman.jpg">
-      <h2>Venkman</h2>
-      <p>Back off, man. I'm a scientist.</p>
-    </a>
-  </div>
-   <div class="list">
-    <a class="item item-avatar" href="#">
-      <img src="venkman.jpg">
-      <h2>Venkman</h2>
-      <p>Back off, man. I'm a scientist.</p>
-    </a>
-  </div>
+      <img ng-src="{{item.image_url}}">
+      <h2>{{item.name}}</h2>
+      <p>{{item.snippet_text}}</p>
+
+    </ion-item>
+  </ion-list>
+  <button ng-show="!loading && restaurants.length > 0" class="button button-block button-positive" ng-click="start()">Start</button>
   </ion-content>
 </ion-view>

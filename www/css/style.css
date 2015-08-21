@@ -11,8 +11,7 @@
 	max-height: 60%;
 }
 
-.list {
-	margin: auto;
-	max-width: 80%;
-	display: none;
+.spinner-container {
+	text-align: center;
+	margin-top: 50%;
 }

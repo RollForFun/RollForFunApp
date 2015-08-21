@@ -1,29 +1,68 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {
+.controller('DashCtrl', function($scope, $http, $rootScope, $ionicPopup, $timeout, $ionicScrollDelegate, $cordovaInAppBrowser) {
+  var api_url = "http://rollforfun.herokuapp.com/api/";
+  $scope.shake_ready = false;
+  $scope.restaurants = [];
+  $scope.loading = false;
+
+  var get_restaurants = function() {
+    console.log("result");
+    $scope.loading = true;
+    $http.get( api_url + "roll" ).success(function(result) {
+      console.log(result);
+      $scope.loading = false;
+      $scope.restaurants = result.businesses;
+    });
+  };
+
+  $scope.showAlert = function(title, msg) {
+   var alertPopup = $ionicPopup.alert({
+     title: title,
+     template: msg
+   });
+  };
   var onShake = function () {
-    alert("Oh yeah");
-    $(".list").show();
-    window.cordova.plugins.shake.stopWatch();
+    $rootScope.shake.stopWatch();
+    $scope.shake_ready = false;
+    get_restaurants();
   };
 
   var onError = function () {
-    alert("WTF");
+    $scope.showAlert("WTF!","");
   };
-  if (cordova) {
-    //alert("yes");
-  }
-  else{
-    alert("WTF,No cordova?");
-  }
-  
-  try {
-    window.cordova.plugins.shake.startWatch(onShake, 40, onError);
-    alert("shake start!");
-  }
-  catch(err) {
-    document.getElementById("demo").innerHTML = err.message;
-  }
+  $scope.start = function () {
+    $ionicScrollDelegate.scrollTop();
+    $scope.restaurants = [];
+    try {
+      $rootScope.shake.startWatch(onShake, 20, onError);
+      $scope.shake_ready = true;
+    }
+    catch(err) {
+      //$timeout($scope.retry, 200);
+      $scope.showAlert("WTF","shake is not avaliable on this divice");
+    }
+  };
+  $scope.retry = function () {
+    $scope.restaurants = [];
+    try {
+      $rootScope.shake.startWatch(onShake, 20, onError);
+      $scope.shake_ready = true;
+    }
+    catch(err) {
+      $timeout($scope.start, 200);
+    }
+  };
+
+  $scope.open_url = function(url) {
+    $cordovaInAppBrowser.open(url, '_blank');
+  };
+
+  $timeout($scope.start, 400);
+  $scope.desktop = function(){
+    $scope.shake_ready = false;
+    get_restaurants();
+  };
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {
