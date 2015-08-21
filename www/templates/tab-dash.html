@@ -2,6 +2,7 @@
   <ion-content class="padding">
   <div ng-show="shake_ready ||(!loading && restaurants.length == 0)" ng-click="desktop()" class ="shakeImg">
     <img src ="img/shake.jpg">
+    <p>Location: {{latitude}},{{longitude}}</p>
   </div>
   <div ng-show="loading" class="spinner-container">
     <ion-spinner></ion-spinner>
