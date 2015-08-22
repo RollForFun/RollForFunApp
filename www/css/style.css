@@ -15,3 +15,19 @@
 	text-align: center;
 	margin-top: 50%;
 }
+
+.icon-favorite-row {
+	display: inline-block;
+	width: 100%;
+}
+
+.icon-favorite-row > img{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.icon-favorite-row .ion-heart {
+	position: absolute;
+    right: 5px;
+    top: 0px;
+}

@@ -21,6 +21,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       StatusBar.styleLightContent();
     }
     $rootScope.shake = shake;
+    $rootScope.shake_hw_ready = true;
   });
 })
 

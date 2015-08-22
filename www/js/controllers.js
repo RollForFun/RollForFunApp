@@ -15,7 +15,7 @@ angular.module('starter.controllers', [])
       $scope.latitude = position.coords.latitude
       $scope.longitude = position.coords.longitude
     }, function(err) {
-      // error
+      $scope.showAlert("WTF","didn't get the location?");
     });
 
   var get_restaurants = function() {
@@ -51,7 +51,7 @@ angular.module('starter.controllers', [])
   };
 
   var onError = function () {
-    $scope.showAlert("WTF!","");
+    $scope.showAlert("WTF","shaking error?");
   };
   $scope.start = function () {
     $ionicScrollDelegate.scrollTop();
@@ -61,18 +61,7 @@ angular.module('starter.controllers', [])
       $scope.shake_ready = true;
     }
     catch(err) {
-      //$timeout($scope.retry, 200);
-      $scope.showAlert("WTF","shake is not avaliable on this divice");
-    }
-  };
-  $scope.retry = function () {
-    $scope.restaurants = [];
-    try {
-      $rootScope.shake.startWatch(onShake, 20, onError);
-      $scope.shake_ready = true;
-    }
-    catch(err) {
-      $timeout($scope.start, 200);
+      $scope.showAlert("WTF","shake is not working?");
     }
   };
 
@@ -80,11 +69,25 @@ angular.module('starter.controllers', [])
     $cordovaInAppBrowser.open(url, '_blank');
   };
 
-  $timeout($scope.start, 400);
-  $scope.desktop = function(){
+  $timeout(function() {
+      if (typeof $rootScope.shake_hw_ready === "undefined") {
+        $scope.showAlert("WTF","shake is not available on your device?");
+      }
+    }, 5000);
+  $scope.desktop = function() {
     $scope.shake_ready = false;
     get_restaurants();
   };
+
+  var shakeWatch = $scope.$watch(function() {
+    return $rootScope.shake_hw_ready;
+  },
+    function(newValue, oldValue) {
+      if (newValue === true) {
+        $scope.start();
+        shakeWatch();
+      }
+  });
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {

@@ -9,12 +9,17 @@
   </div>
   <ion-list>
     <ion-item ng-repeat="item in restaurants"
-              class="item-thumbnail-left" ng-click="open_url(item.url)">
-
-      <img ng-src="{{item.image_url}}">
-      <h2>{{item.name}}</h2>
-      <p>{{item.snippet_text}}</p>
-
+              class="item-thumbnail-left">
+      <img ng-src="{{item.image_url}}" ng-click="open_url(item.mobile_url)">
+      <div class="icon-favorite-row">
+        <img ng-src="{{item.rating_img_url}}">
+        <a class="button button-icon icon ion-heart" ng-click="showAlert('Save', item.name)"></a>
+      </div>
+      <h2 ng-click="open_url(item.mobile_url)">{{item.name}}</h2>
+      <p ng-click="open_url(item.mobile_url)" style="
+          white-space: initial;
+          height: 2.9em;
+      ">{{item.snippet_text}}</p>
     </ion-item>
   </ion-list>
   <button ng-show="!loading && restaurants.length > 0" class="button button-block button-positive" ng-click="start()">Start</button>
