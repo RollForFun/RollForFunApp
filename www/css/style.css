@@ -30,4 +30,23 @@
 	position: absolute;
     right: 5px;
     top: 0px;
+    color: #C1C1C1;
+}
+
+.profile-section {
+	width: inherit;
+	height: 20em;
+	margin: 0;
+	text-align: center;
+}
+
+.profile-section > img {
+	width: 25%;
+	margin-top: 25%;
+	border-radius: 50%;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.profile-section > h3 {
+	text-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }

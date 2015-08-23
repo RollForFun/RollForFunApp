@@ -1,9 +1,9 @@
 <ion-view view-title="Account">
   <ion-content>
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
+    <div class="card profile-section">
+      <img ng-src="https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg">
+      <h3>{{ getCurrentUser().name }}</h3>
+      <a ui-sref="logout">Logout</a>
+    </div>
   </ion-content>
 </ion-view>

@@ -1,5 +1,33 @@
 angular.module('starter.controllers', [])
 
+.controller('LoginCtrl', function($scope, Auth, $state, $window) {
+  $scope.user = {};
+  $scope.errors = {};
+
+  $scope.login = function(form) {
+    $scope.submitted = true;
+
+    if (form.$valid) {
+      Auth.login({
+        email: $scope.user.email,
+        password: $scope.user.password
+      })
+      .then(function() {
+        console.log("login success")
+        // Logged in, redirect to home
+        $state.go('tab.account');
+      })
+      .catch(function(err) {
+        $scope.errors.other = err.message;
+      });
+    }
+  };
+
+  $scope.loginOauth = function(provider) {
+    $window.location.href = '/auth/' + provider;
+  };
+})
+
 .controller('DashCtrl', function($scope, $http, $rootScope, $ionicPopup, $timeout, $ionicScrollDelegate, $cordovaGeolocation, $cordovaInAppBrowser) {
   var api_url = "http://rollforfun.herokuapp.com/api/";
   $scope.shake_ready = false;
@@ -109,8 +137,6 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('AccountCtrl', function($scope, $state, Auth) {
+  $scope.getCurrentUser = Auth.getCurrentUser;
 });
