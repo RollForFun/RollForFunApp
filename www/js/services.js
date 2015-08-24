@@ -1,4 +1,4 @@
-var api_url = "http://localhost:9000";
+var api_url = "http://rff.herokuapp.com";
 
 angular.module('starter.services', [])
 
