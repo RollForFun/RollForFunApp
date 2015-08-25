@@ -28,8 +28,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('DashCtrl', function($scope, $http, $rootScope, $ionicPopup, $timeout, $ionicScrollDelegate, $cordovaGeolocation, $cordovaInAppBrowser) {
-  var api_url = "http://rollforfun.herokuapp.com/api/";
+.controller('DashCtrl', function($scope, $http, $rootScope, ApiUrl, $ionicPopup, $timeout, $ionicScrollDelegate, $cordovaGeolocation, $cordovaInAppBrowser) {
   $scope.shake_ready = false;
   $scope.restaurants = [];
   $scope.loading = false;
@@ -50,15 +49,13 @@ angular.module('starter.controllers', [])
     console.log("result");
     $scope.loading = true;
     if ($scope.latitude === "" || $scope.longitude === "") {
-      $http.get( api_url + "roll" ).success(function(result) {
-        console.log(result);
+      $http.get( ApiUrl.get() + "/api/yelp/search?location=Waterloo" ).success(function(result) {
         $scope.loading = false;
         $scope.restaurants = result.businesses;
       });
     }
     else {
-      $http.get(api_url + "rollbyll/" + $scope.latitude + "/" + $scope.longitude).success(function(result) {
-        console.log(result);
+      $http.get( ApiUrl.get() + "/api/yelp/search?ll=" + $scope.latitude + "," + $scope.longitude).success(function(result) {
         $scope.loading = false;
         $scope.restaurants = result.businesses;
       });
