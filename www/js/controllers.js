@@ -28,15 +28,13 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('DashCtrl', function($scope, $http, $rootScope, $ionicPopup, $timeout, $ionicScrollDelegate, $cordovaGeolocation, $cordovaInAppBrowser) {
-    var api_url = "http://rollforfun.herokuapp.com/api/";
-    $scope.shake_ready = false;
-    $scope.restaurants = [];
-    $scope.loading = false;
-    $scope.latitude = "";
-    $scope.longitude = "";
-    $scope.restaurant;
-    
+.controller('DashCtrl', function($scope, $http, $rootScope, ApiUrl, $ionicPopup, $timeout, $ionicScrollDelegate, $cordovaGeolocation, $cordovaInAppBrowser) {
+  $scope.shake_ready = false;
+  $scope.restaurants = [];
+  $scope.loading = false;
+  $scope.latitude = "";
+  $scope.longitude = "";
+  $scope.restaurant;
 
   var posOptions = {timeout: 10000, enableHighAccuracy: false};
   $cordovaGeolocation
@@ -52,24 +50,20 @@ angular.module('starter.controllers', [])
     console.log("result");
     $scope.loading = true;
     if ($scope.latitude === "" || $scope.longitude === "") {
-        $http.get(api_url + "roll").success(function (result) {
-            console.log("Fetching data from default location...");
-            console.log(result);
-            $scope.loading = false;
-            $scope.restaurants = result.businesses;
+      $http.get( ApiUrl.get() + "/api/yelp/search?location=Waterloo" ).success(function(result) {
+        $scope.loading = false;
+        $scope.restaurants = result.businesses;
       });
     }
     else {
-        $http.get(api_url + "rollbyll/" + $scope.latitude + "/" + $scope.longitude).success(function (result) {
-            console.log("Fetching data from current location...");
-            console.log(result);
-            $scope.loading = false;
-            //$scope.restaurants = result.businesses;
-            var random = Math.floor(Math.random() * 20);
-            var restaurant = result.businesses[random];
-            $scope.restaurant = restaurant;
-            $scope.name = restaurant.name;
-        });
+      $http.get( ApiUrl.get() + "/api/yelp/search?ll=" + $scope.latitude + "," + $scope.longitude).success(function(result) {
+        $scope.loading = false;
+          //$scope.restaurants = result.businesses;
+        var random = Math.floor(Math.random() * 20);
+        var restaurant = result.businesses[random];
+        $scope.restaurant = restaurant;
+        $scope.name = restaurant.name;
+      });
     }
     
   };
