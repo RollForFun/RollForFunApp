@@ -1,13 +1,13 @@
 <ion-view view-title="Roll">
   <ion-content class="padding">
-  <div ng-show="shake_ready ||(!loading && restaurants.length == 0)" ng-click="desktop()" class ="shakeImg">
+  <div ng-show="shake_ready ||(!loading && !restaurant)" ng-click="desktop()" class ="shakeImg">
     <img src ="img/shake.jpg">
     <p>Location: {{latitude}},{{longitude}}</p>
   </div>
   <div ng-show="loading" class="spinner-container">
     <ion-spinner></ion-spinner>
   </div>
-  <ion-list>
+  <!--<ion-list>
     <ion-item ng-repeat="item in restaurants"
               class="item-thumbnail-left">
       <img ng-src="{{item.image_url}}" ng-click="open_url(item.mobile_url)">
@@ -21,7 +21,10 @@
           height: 2.9em;
       ">{{item.snippet_text}}</p>
     </ion-item>
-  </ion-list>
-  <button ng-show="!loading && restaurants.length > 0" class="button button-block button-positive" ng-click="start()">Start</button>
+  </ion-list>-->
+    <div ng-controller="DashCtrl">
+        {{name}}
+    </div>
+      <button ng-show="!loading && !restaurant" class="button button-block button-positive" ng-click="start()">Start</button>
   </ion-content>
 </ion-view>
